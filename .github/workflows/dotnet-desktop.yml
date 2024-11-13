@@ -44,9 +44,9 @@ jobs:
 
     - name: Create ZIP of .exe files
       run: |
-        $exeFiles = Get-ChildItem -Path "TodoList/bin/Release/net6.0-windows10.0.19041.0/win-x64/publish" -Filter *.exe
+        $publishDir = "TodoList/bin/Release/net6.0-windows10.0.19041.0/win-x64/publish"
         $zipFile = "TodoList.zip"
-        Compress-Archive -Path $exeFiles.FullName -DestinationPath $zipFile
+        Compress-Archive -Path "$publishDir\*" -DestinationPath $zipFile
     
     - uses: actions/create-release@v1
       id: create_release
