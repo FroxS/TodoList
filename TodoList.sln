@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.Core.Tests.NUnit",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A7E23BF6-C4FE-4887-8F2C-17A588154133}"
 	ProjectSection(SolutionItems) = preProject
-		.git\workflows\dotnet-desktop-deploy-TODO.yml = .git\workflows\dotnet-desktop-deploy-TODO.yml
+		.github\workflows\dotnet-desktop.yml = .github\workflows\dotnet-desktop.yml
 	EndProjectSection
 EndProject
 Global

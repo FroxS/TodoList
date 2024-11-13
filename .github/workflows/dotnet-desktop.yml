@@ -2,11 +2,9 @@ name: "Deply TODO Tasks"
 
 on:
   push:
-    tags:
-      - "todotasks/v*"
-  #  branches: [ "master" ]
-  #pull_request:
-  #  branches: [ "master" ]
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
   build:
