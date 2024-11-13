@@ -33,8 +33,8 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
-    #- name: Run Test
-    #  run: dotnet test ${{ env.Test_Project_Path }}
+    - name: Run Test
+      run: dotnet test ${{ env.Test_Project_Path }}
 
     - name: Restore the application
       run: dotnet restore ${{ env.Project_path }}
@@ -55,8 +55,13 @@ jobs:
         draft: false
         prerelease: false
 
+    - name: Prepare artifacts excluding .pdb files
+      run: |
+        mkdir artifacts
+        robocopy TodoList/bin/Release/net6.0-windows10.0.19041.0/win-x64/publish artifacts /XF *.pdb
+
     - uses: csexton/release-asset-action@v2
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        pattern: TodoList/bin/Release/net6.0-windows10.0.19041.0/win-x64/publish/*.exe
+        pattern: artifacts\* 
         release-url: ${{ steps.create_release.outputs.upload_url }}
