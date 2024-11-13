@@ -35,7 +35,7 @@ jobs:
     - name: Publish the application
       run: dotnet publish ${{ env.Project_path }} -c Release --self-contained -r win-x64 -p:PublishSingleFile=true
 
-    - uses: action/create-release@v1
+    - uses: actions/create-release@v1
       id: create_release
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -47,4 +47,4 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         pattern: TodoList/bin/Release/net6.0-windows10.0.19041.0/win-x64/publish/*.exe
-        release-url: ${{ steps.create_release.output.upload_url }}
+        release-url: ${{ steps.create_release.outputs.upload_url }}
