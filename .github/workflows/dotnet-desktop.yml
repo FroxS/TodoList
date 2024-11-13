@@ -57,11 +57,11 @@ jobs:
 
     - name: Prepare artifacts excluding .pdb files
       run: |
-        mkdir artifacts
-        robocopy TodoList/bin/Release/net6.0-windows10.0.19041.0/win-x64/publish artifacts /XF *.pdb
+        cd TodoList/bin/Release/net6.0-windows10.0.19041.0/win-x64/publish
+        powershell Compress-Archive -Path * -CompressionLevel Optimal -DestinationPath ../../artifacts.zip -Force -Exclude *.pdb
 
     - uses: csexton/release-asset-action@v2
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
-        pattern: artifacts\* 
+        pattern: TodoList/bin/Release/artifacts.zip 
         release-url: ${{ steps.create_release.outputs.upload_url }}
