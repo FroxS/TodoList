@@ -18,11 +18,14 @@ jobs:
       Project_path: TodoList/TodoList.csproj                       
       Test_Project_Path: TodoList.Core.Tests.NUnit/TodoList.Core.Tests.NUnit.csproj                
 
+
+
     steps:
     - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-
+    - name: Check directory structure
+      run: dir /s /b
     #- name: Run Test
     #  run: dotnet test #${{ env.Test_Project_Path }}
 
