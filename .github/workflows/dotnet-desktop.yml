@@ -3,7 +3,7 @@ name: "Deploy TODO Tasks"
 on:
   push:
     tags:
-      - 'version:*' 
+      - 'version-*' 
 
 jobs:
   build:
