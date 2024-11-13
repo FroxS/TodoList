@@ -1,0 +1,270 @@
+﻿<UserControl xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls" 
+    x:Class="TodoList.Views.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:properties="clr-namespace:TodoList.Properties"
+    xmlns:conv="clr-namespace:TodoList.Converters"
+    xmlns:ctrl="clr-namespace:TodoList.Controls"
+    xmlns:vm="clr-namespace:TodoList.ViewModels"
+    Style="{StaticResource BaseUserControlStyle}"
+    d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
+    mc:Ignorable="d"
+    d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <DataTemplate x:Key="ItemTemplate">
+            <Grid Height="30">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Path Visibility="{Binding Important, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}}"
+                      Data="{StaticResource StarSelected}"
+                      Fill="{DynamicResource Theme.ShowcaseBrush}"
+                      Stretch="Uniform"
+                      Width="20">
+                    
+                </Path>
+              
+                <StackPanel
+                    Grid.Column="2"
+                    Margin="{StaticResource SmallLeftMargin}"
+                    VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource BodyTextStyle}" Text="{Binding Title}"
+                               TextDecorations="{Binding IsCompleted,UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToTextDecorationConventer}, ConverterParameter=True}"/>
+                </StackPanel>
+            </Grid>
+        </DataTemplate>
+
+        <DataTemplate x:Key="DetailTemplate">
+            <ScrollViewer
+                Name="ForegroundElement"
+                IsTabStop="True"
+                HorizontalAlignment="Stretch">
+                <Grid HorizontalAlignment="Left" Margin="{StaticResource MediumLeftTopRightBottomMargin}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Stretch"
+                                Grid.Row="0">
+                        <ctrl:MyToogle CheckedShape="{StaticResource OkSelected }"
+                                       UnCheckedShape="{StaticResource OkNotSelected }"
+                                       Width="20"
+                                       Height="20"
+                                       Margin="5 0 5 0"
+                                       IsChecked="{Binding IsCompleted,UpdateSourceTrigger=PropertyChanged}"
+                                       Foreground="{DynamicResource Theme.ShowcaseBrush}"
+                                       ToolTip="{x:Static properties:Resources.Notifications}">
+                            
+                        </ctrl:MyToogle>
+                        <TextBlock
+                            Margin="0"
+                            VerticalAlignment="Center"
+                            TextDecorations="{Binding IsCompleted,UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToTextDecorationConventer}, ConverterParameter=True}"
+                            Text="{Binding Title, Mode=OneWay, FallbackValue=Tytuł}"
+                            Style="{StaticResource PageTitleStyle}" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Row="0"
+                                Orientation="Horizontal"
+                                HorizontalAlignment="Right">
+                        <ctrl:MyToogle CheckedShape="{StaticResource StarSelected }"
+                                       UnCheckedShape="{StaticResource StarNotSelected }"
+                                       Width="20"
+                                       Height="20"
+                                       Margin="5 0 5 0"
+                                       IsChecked="{Binding Important,UpdateSourceTrigger=PropertyChanged}"
+                                       Foreground="{DynamicResource Theme.ShowcaseBrush}"
+                                       ToolTip="{x:Static properties:Resources.Favourite}">
+
+                        </ctrl:MyToogle>
+
+                        <ctrl:MyToogle CheckedShape="{StaticResource Notification }"
+                                       UnCheckedShape="{StaticResource NotNotification }"
+                                       Width="20"
+                                       Height="20"
+                                       Margin="5 0 5 0"
+                                       IsChecked="{Binding AddNotification,UpdateSourceTrigger=PropertyChanged}"
+                                       Foreground="{DynamicResource Theme.ShowcaseBrush}"
+                                       ToolTip="{x:Static properties:Resources.Notifications}">
+
+                        </ctrl:MyToogle>
+                    </StackPanel>
+
+                    <StackPanel Margin="{StaticResource SmallTopMargin}"
+                                Visibility="Collapsed">
+                        <mah:ToggleSwitch Margin="00 0 0 0"
+                                          IsOn="{Binding IsCompleted,UpdateSourceTrigger=PropertyChanged}">
+                            <Grid VerticalAlignment="Center"
+                                  >
+                                <StackPanel Height="20"
+                                            Orientation="Horizontal"
+                                            Visibility="{Binding IsCompleted,UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=true}">
+                                    <Path Data="{StaticResource taskNotComplited}"
+                                          Fill="Firebrick"
+                                          Height="20"
+                                          Stretch="Uniform">
+
+                                    </Path>
+                                    <TextBlock Style="{StaticResource BaseTextBlockStyle}"
+                                               Margin="{StaticResource SmallLeftMargin}"
+                                               Text="{x:Static properties:Resources.NotCompleted}"/>
+                                </StackPanel>
+
+                                <StackPanel Height="20"
+                                            Orientation="Horizontal"
+                                            Visibility="{Binding IsCompleted,UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}}">
+                                    <Path Data="{StaticResource taskComplited}"
+                                          Fill="Green"
+                                          Height="20"
+                                          Stretch="Uniform">
+
+                                    </Path>
+                                    <TextBlock Style="{StaticResource BaseTextBlockStyle}"
+                                               Margin="{StaticResource SmallLeftMargin}"
+                                               Text="{x:Static properties:Resources.Completed}"/>
+                                </StackPanel>
+                            </Grid>
+                        </mah:ToggleSwitch>
+                    </StackPanel>
+                        
+                    <StackPanel IsEnabled="{Binding IsCompleted, UpdateSourceTrigger=PropertyChanged, Converter={conv:InverseBoolConventer}}"
+                                Grid.Row="1">
+
+                        <TextBlock
+                            Margin="{StaticResource MediumTopMargin}"
+                            Style="{StaticResource SubtitleTextStyle}"
+                            Text="{x:Static properties:Resources.Name}" />
+                        <TextBox
+                            Margin="{StaticResource SmallTopMargin}"
+                            Style="{StaticResource MahApps.Styles.TextBox}"
+                            Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
+
+                        <TextBlock
+                            Margin="{StaticResource SmallTopMargin}"
+                            Style="{StaticResource SubtitleTextStyle}"
+                            Text="{x:Static properties:Resources.CompletionDate}" />
+                        <StackPanel Margin="{StaticResource SmallTopMargin}">
+                            <ctrl:DateTimePickerFormat 
+                                SelectedDateTime="{Binding DueDate, UpdateSourceTrigger=PropertyChanged,StringFormat='{}{0:dd.MM.yyyy dddd HH:mm}'}"
+                                DateFormat="dd.MM.yyyy dddd HH:mm"             
+                                Width="300"
+                                FirstDayOfWeek="Monday"
+                                HorizontalAlignment="Left">
+                            </ctrl:DateTimePickerFormat>
+                        </StackPanel>
+                        
+                        <TextBlock
+                            Margin="{StaticResource MediumTopMargin}"
+                            Style="{StaticResource SubtitleTextStyle}"
+                            Text="{x:Static properties:Resources.Note}" />
+                        <TextBox
+                            TextWrapping="Wrap"
+                            Margin="{StaticResource SmallTopMargin}"
+                            MinLines="5"
+                            AcceptsReturn="True"
+                            Style="{StaticResource MahApps.Styles.TextBox}"
+                            Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
+                        
+                        </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="180" MaxWidth="300" Width="*" />
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="2*" />
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackPanel Orientation="Horizontal"
+                        Margin="5">
+                <Path Data="{StaticResource checklist}"
+                      Stretch="Uniform"
+                      Fill="{StaticResource MahApps.Brushes.Accent}"/>
+                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         Margin="{StaticResource MediumLeftMargin}"
+                         Width="150"
+                         Height="30"/>
+
+                <Button Height="30"
+                        Command="{Binding SearchCommand}"
+                        >
+                    <Path Data="{StaticResource search}"
+                          Stretch="Uniform"
+                          Fill="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"/>
+                </Button>
+
+            </StackPanel>
+            <ScrollViewer Grid.Row="1">
+
+
+                <StackPanel>
+                    <Expander 
+                        Header="{x:Static properties:Resources.Today}" 
+                        IsExpanded="True"
+                        Visibility="{Binding SearchText, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}">
+                    <ListView
+                        AutomationProperties.Name="{x:Static    properties:Resources.ListDetailsListDescription}"
+                        ItemsSource="{Binding TodayTasks}"
+                        ItemTemplate="{StaticResource ItemTemplate}"
+                        SelectedItem="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                        <ListView.InputBindings>
+                            <KeyBinding Key="Delete" Command="{Binding RemoveCommand}"/>
+                        </ListView.InputBindings>
+                    </ListView>
+                </Expander>
+                
+                <ListView
+                    AutomationProperties.Name="{x:Static properties:Resources.ListDetailsListDescription}"
+                    ItemsSource="{Binding TasksCollection}"
+                    ItemTemplate="{StaticResource ItemTemplate}"
+                    SelectedItem="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
+                    <ListView.InputBindings>
+                        <KeyBinding Key="Delete" Command="{Binding RemoveCommand}"/>
+                    </ListView.InputBindings>
+                    <ListView.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.ContainerStyle>
+                                <Style TargetType="{x:Type GroupItem}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                <Expander IsExpanded="True" Header="{Binding    Converter={conv:GroupToNameConventer}}" >
+                                                    <ItemsPresenter Margin="20,0,0,0" />
+                                                </Expander>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </GroupStyle.ContainerStyle>
+                        </GroupStyle>
+                    </ListView.GroupStyle>
+                </ListView>
+            </StackPanel>
+
+            </ScrollViewer>
+
+            
+        </Grid>
+
+        <GridSplitter Grid.Column="1"
+                      Width="2"/>
+
+        <ContentControl
+            Grid.Column="2"
+            IsTabStop="False"
+            Visibility="{Binding Selected, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}}"
+            Content="{Binding Selected, UpdateSourceTrigger=PropertyChanged}"
+            ContentTemplate="{StaticResource DetailTemplate}" />
+    </Grid>
+</UserControl>
