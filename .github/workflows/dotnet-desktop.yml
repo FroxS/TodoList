@@ -24,7 +24,7 @@ jobs:
         dotnet-version: 6.0.x
 
     - name: Run Test
-      run: dotnet test ${{ env.Test_Project_Path }}
+      run: dotnet test #${{ env.Test_Project_Path }}
 
     - name: Restore the application
       run: dotnet restore ${{ env.Project_path }}
