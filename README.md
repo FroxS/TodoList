@@ -1,5 +1,5 @@
 
-## Task Management App
+## Aplikacja TODO
 
 Aplikacja desktopowa umożiwiająca tworzenie, zarządzanie zadań typu TODO. Aplikacja wspiera wielojęzyczność (polski oraz angielski) oraz umożliwia automatyczne dostosowanie schematu kolorystycznego (jasny/ciemny) w zależności od ustawień systemu Windows lub wybranie własnego. Moża włączyć powiadomienia, które uruchamiają się podczas uruchamiania aplikacji jeżli jakies zadanie jest na dziś.
 
