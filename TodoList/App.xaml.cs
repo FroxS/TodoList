@@ -34,9 +34,11 @@ public partial class App : PrismApplication
     private static Thread _splashThread;
     public App()
     {
+       // MessageBox.Show("OK");
+
         CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
         CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
-        var appLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+        var appLocation = Path.GetDirectoryName(AppContext.BaseDirectory);
         var conf = new ConfigurationBuilder()
             .SetBasePath(appLocation)
             .AddJsonFile("appsettings.json")
@@ -185,7 +187,7 @@ public partial class App : PrismApplication
             { ToastNotificationActivationArguments, string.Empty }
         };
 
-        var appLocation = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+        var appLocation = Path.GetDirectoryName(AppContext.BaseDirectory);
         return new ConfigurationBuilder()
             .SetBasePath(appLocation)
             .AddJsonFile("appsettings.json")
@@ -202,7 +204,7 @@ public partial class App : PrismApplication
 
     private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
-        
+        MessageBox.Show(e.Exception.Message);
     }
 
     public static void ReloadResources()

@@ -18,7 +18,7 @@ public class ApplicationInfoService : IApplicationInfoService
 
     public Version GetVersion()
     {
-        string assemblyLocation = Assembly.GetExecutingAssembly().Location;
+        string assemblyLocation = AppContext.BaseDirectory;// Assembly.GetExecutingAssembly().Location;
         var version = FileVersionInfo.GetVersionInfo(assemblyLocation).FileVersion;
         return new Version(version);
     }
