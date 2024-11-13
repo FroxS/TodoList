@@ -25,7 +25,7 @@ jobs:
       with:
         dotnet-version: 6.0.x
     - name: Check directory structure
-      run: dir /s /b
+      run: dir
     #- name: Run Test
     #  run: dotnet test #${{ env.Test_Project_Path }}
 
