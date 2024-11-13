@@ -15,8 +15,8 @@ jobs:
     runs-on: windows-latest 
 
     env:
-      Project_path: TodoList\TodoList.csproj                       
-      Test_Project_Path: TodoList.Core.Tests.NUnit\TodoList.Core.Tests.NUnit.csproj                
+      Project_path: TodoList/TodoList.csproj                       
+      Test_Project_Path: TodoList.Core.Tests.NUnit/TodoList.Core.Tests.NUnit.csproj                
 
     steps:
     - uses: actions/setup-dotnet@v1
