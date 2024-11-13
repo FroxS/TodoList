@@ -48,6 +48,8 @@ jobs:
       with:
         tag_name: ${{ github.ref }}
         release_name: ${{ github.ref }}
+        draft: false
+        prerelease: false
 
     - uses: csexton/release-asset-action@v2
       with:
