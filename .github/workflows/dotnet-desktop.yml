@@ -1,14 +1,10 @@
 name: "Deploy TODO Tasks"
 
-#on:
-#  push:
-#    branches: [ "master" ]
-#  pull_request:
-#    branches: [ "master" ]
 on:
   push:
-    tags:
-      - "todotasks/v*"
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
   build:
