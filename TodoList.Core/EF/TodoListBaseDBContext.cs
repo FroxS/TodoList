@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Reflection.Metadata;
 using TodoList.Core.Models;
 
 namespace TodoList.Core.EF
@@ -22,6 +23,7 @@ namespace TodoList.Core.EF
         #region Tables
 
         public DbSet<TaskItem> Tasks { get; set; }
+        public DbSet<TaskISubtem> SubTasks { get; set; }
 
         #endregion
 
@@ -37,12 +39,23 @@ namespace TodoList.Core.EF
 
         public TodoListBaseDBContext(DbContextOptions options) :base(options)
         {
-            DatabasePath = "TodoList.sqlite";
+            //DatabasePath = "TodoList.sqlite";
         }
 
         #endregion
 
         #region Configurtaion
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<TaskItem>()
+                .HasMany(x => x.Items)
+                .WithOne(x => x.Parent)
+                .HasForeignKey(x => x.IdParent)
+                .OnDelete(DeleteBehavior.Cascade);
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options) 
         {

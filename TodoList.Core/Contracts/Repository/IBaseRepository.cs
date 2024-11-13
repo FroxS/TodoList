@@ -3,7 +3,7 @@
     public interface IBaseRepository<T> where T : class
     {
         Task<List<T>> GetAllAsync(CancellationToken cancellationToken = default(CancellationToken));
-        List<T> GetAll(bool sortbylp = true);
+        List<T> GetAll();
         Task<T> GetByIdAsync(Guid id, CancellationToken cancellationToken = default(CancellationToken));
         T GetById(Guid id);
         bool Exist(Guid id);

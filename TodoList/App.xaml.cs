@@ -34,8 +34,6 @@ public partial class App : PrismApplication
     private static Thread _splashThread;
     public App()
     {
-       // MessageBox.Show("OK");
-
         CultureInfo.DefaultThreadCurrentCulture = CultureInfo.InvariantCulture;
         CultureInfo.DefaultThreadCurrentUICulture = CultureInfo.InvariantCulture;
         var appLocation = Path.GetDirectoryName(AppContext.BaseDirectory);
@@ -54,6 +52,16 @@ public partial class App : PrismApplication
 
             string lang = Properties["Lang"].ToString();
             SetCulture(lang);
+        }
+        else
+        {
+            CultureInfo systemCulture = CultureInfo.InstalledUICulture;
+            if (string.IsNullOrEmpty(systemCulture?.Name))
+            {
+                string lang = "";
+                Properties["Lang"] = lang = systemCulture.Name;
+                SetCulture(lang);
+            }
         }
 
     }

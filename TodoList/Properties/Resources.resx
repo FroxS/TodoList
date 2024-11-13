@@ -225,4 +225,13 @@
   <data name="Removal" xml:space="preserve">
     <value>Removal</value>
   </data>
+  <data name="AskRestartApp" xml:space="preserve">
+    <value>Application restart required or should I restart?</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Restart</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Tasks</value>
+  </data>
 </root>

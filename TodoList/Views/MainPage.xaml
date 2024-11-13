@@ -8,10 +8,12 @@
     xmlns:conv="clr-namespace:TodoList.Converters"
     xmlns:ctrl="clr-namespace:TodoList.Controls"
     xmlns:vm="clr-namespace:TodoList.ViewModels"
+    xmlns:local="clr-namespace:TodoList.Views"
     Style="{StaticResource BaseUserControlStyle}"
     d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
     mc:Ignorable="d"
-    d:DesignHeight="450" d:DesignWidth="800">
+    d:DesignHeight="450" d:DesignWidth="800"
+             x:Name="mainpage">
     <UserControl.Resources>
         <DataTemplate x:Key="ItemTemplate">
             <Grid Height="30">
@@ -28,7 +30,7 @@
                       Width="20">
                     
                 </Path>
-              
+
                 <StackPanel
                     Grid.Column="2"
                     Margin="{StaticResource SmallLeftMargin}"
@@ -150,13 +152,98 @@
                             Text="{x:Static properties:Resources.CompletionDate}" />
                         <StackPanel Margin="{StaticResource SmallTopMargin}">
                             <ctrl:DateTimePickerFormat 
-                                SelectedDateTime="{Binding DueDate, UpdateSourceTrigger=PropertyChanged,StringFormat='{}{0:dd.MM.yyyy dddd HH:mm}'}"
+                                SelectedDateTime="{Binding DueDate, UpdateSourceTrigger=LostFocus,StringFormat='{}{0:dd.MM.yyyy dddd HH:mm}'}"
                                 DateFormat="dd.MM.yyyy dddd HH:mm"             
                                 Width="300"
                                 FirstDayOfWeek="Monday"
                                 HorizontalAlignment="Left">
                             </ctrl:DateTimePickerFormat>
                         </StackPanel>
+
+                        <StackPanel>
+                            <GroupBox Margin="{StaticResource MediumTopMargin}">
+                                <GroupBox.Header>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button 
+                                            Width="20"
+                                            Padding="0"
+                                            Click="Button_Click"
+                                            BorderThickness="0"
+                                            Background="Transparent">
+                                            <Path 
+                                                Data="{StaticResource Add}"
+                                                Fill="{StaticResource Fluent.Ribbon.Brushes.Backstage.BackButton.Foreground}"
+                                                Stretch="Uniform">
+                                            </Path>
+                                        </Button>
+                                        <TextBlock 
+                                            Text="{x:Static properties:Resources.Tasks}"
+                                            VerticalAlignment="Center"
+                                            Margin="{StaticResource SmallLeftMargin}"
+                                            Foreground="{StaticResource Fluent.Ribbon.Brushes.Backstage.BackButton.Foreground}"/>
+                                        
+                                    </StackPanel>
+                                </GroupBox.Header>
+                                <ListView ItemsSource="{Binding Items, UpdateSourceTrigger=PropertyChanged}"
+                                          MaxHeight="300">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Height="30">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <ctrl:MyToogle  
+                                                    Grid.Column="0"
+                                                    CheckedShape="{StaticResource OkSelected }"
+                                                    UnCheckedShape="{StaticResource OkNotSelected }"
+                                                    Width="20"
+                                                    Height="20"
+                                                    Margin="5 0 5 0"
+                                                    Background="Transparent"
+                                                    IsChecked="{Binding IsCompleted,UpdateSourceTrigger=PropertyChanged}"
+                                                    Foreground="{DynamicResource Theme.ShowcaseBrush}"
+                                                    ToolTip="{x:Static properties:Resources.Notifications}">
+
+                                                </ctrl:MyToogle>
+
+                                                <StackPanel
+                                                    Grid.Column="1"
+                                                    Margin="{StaticResource SmallLeftMargin}"
+                                                    VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding Name}" 
+                                                               TextDecorations="Strikethrough"
+                                                               Visibility="{Binding IsCompleted,UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}}"/>
+
+                                                    <TextBox Text="{Binding Name}"
+                                                             Visibility="{Binding IsCompleted,UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}"/>
+                                                </StackPanel>
+
+                                                <Button 
+                                                    Grid.Column="2"
+                                                    Width="20"
+                                                    Padding="0"
+                                                    Click="Remove_subitem_click"
+                                                    IsEnabled="{Binding IsCompleted,UpdateSourceTrigger=PropertyChanged, Converter={conv:InverseBoolConventer}}"
+                                                    Margin="{StaticResource SmallLeftMargin}"
+                                                    BorderThickness="0"
+                                                    Background="Transparent">
+                                                    <Path 
+                                                        Data="{StaticResource Remove}"
+                                                        Fill="#fa0a32"
+                                                        Stretch="Uniform">
+                                                    </Path>
+                                                </Button>
+
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </GroupBox>
+                        </StackPanel>
+                        
                         
                         <TextBlock
                             Margin="{StaticResource MediumTopMargin}"
@@ -167,6 +254,10 @@
                             Margin="{StaticResource SmallTopMargin}"
                             MinLines="5"
                             AcceptsReturn="True"
+                            HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Auto"
+                            MaxHeight="300"
+                            Height="100"
                             Style="{StaticResource MahApps.Styles.TextBox}"
                             Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" />
                         
@@ -175,6 +266,7 @@
             </ScrollViewer>
         </DataTemplate>
     </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition MinWidth="180" MaxWidth="300" Width="*" />
@@ -214,7 +306,7 @@
                         IsExpanded="True"
                         Visibility="{Binding SearchText, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}">
                     <ListView
-                        AutomationProperties.Name="{x:Static    properties:Resources.ListDetailsListDescription}"
+                        AutomationProperties.Name="{x:Static properties:Resources.ListDetailsListDescription}"
                         ItemsSource="{Binding TodayTasks}"
                         ItemTemplate="{StaticResource ItemTemplate}"
                         SelectedItem="{Binding Selected, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" >
@@ -263,6 +355,7 @@
         <ContentControl
             Grid.Column="2"
             IsTabStop="False"
+            Tag="{Binding }"
             Visibility="{Binding Selected, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}}"
             Content="{Binding Selected, UpdateSourceTrigger=PropertyChanged}"
             ContentTemplate="{StaticResource DetailTemplate}" />

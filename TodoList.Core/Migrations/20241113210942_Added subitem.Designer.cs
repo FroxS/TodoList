@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TodoList.Core.EF;
 
@@ -10,9 +11,10 @@ using TodoList.Core.EF;
 namespace TodoList.Core.Migrations
 {
     [DbContext(typeof(TodoListBaseDBContext))]
-    partial class TodoListBaseDBContextModelSnapshot : ModelSnapshot
+    [Migration("20241113210942_Added subitem")]
+    partial class Addedsubitem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.35");

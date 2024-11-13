@@ -225,4 +225,13 @@
   <data name="Removal" xml:space="preserve">
     <value>Usuwanie</value>
   </data>
+  <data name="AskRestartApp" xml:space="preserve">
+    <value>Wymagany restart aplikacji, czy zrestartować?</value>
+  </data>
+  <data name="Restart" xml:space="preserve">
+    <value>Uruchom ponownie</value>
+  </data>
+  <data name="Tasks" xml:space="preserve">
+    <value>Zadania</value>
+  </data>
 </root>

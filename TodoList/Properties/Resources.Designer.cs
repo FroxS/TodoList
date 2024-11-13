@@ -79,6 +79,15 @@ namespace TodoList.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Application restart required or should I restart?.
+        /// </summary>
+        public static string AskRestartApp {
+            get {
+                return ResourceManager.GetString("AskRestartApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Are you sure you want to delete?.
         /// </summary>
         public static string AskToDel {
@@ -210,6 +219,15 @@ namespace TodoList.Properties {
         public static string Removal {
             get {
                 return ResourceManager.GetString("Removal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restart.
+        /// </summary>
+        public static string Restart {
+            get {
+                return ResourceManager.GetString("Restart", resourceCulture);
             }
         }
         
@@ -354,6 +372,15 @@ namespace TodoList.Properties {
         public static string ShellPageRibbonTabHomeHeader {
             get {
                 return ResourceManager.GetString("ShellPageRibbonTabHomeHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tasks.
+        /// </summary>
+        public static string Tasks {
+            get {
+                return ResourceManager.GetString("Tasks", resourceCulture);
             }
         }
         

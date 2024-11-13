@@ -1,4 +1,5 @@
-﻿using TodoList.Core.Contracts;
+﻿using Microsoft.EntityFrameworkCore;
+using TodoList.Core.Contracts;
 using TodoList.Core.Models;
 using TodoList.Core.Repository;
 
@@ -7,6 +8,8 @@ namespace TodoList.Core.Services
     internal class TaskItemService : BaseService<TaskItem, TaskItemRepository>, ITaskItemService
     {
         #region Private properties
+
+        private TaskItemRepository _myRepo => _repozitory as TaskItemRepository;
 
         #endregion
 
@@ -22,7 +25,7 @@ namespace TodoList.Core.Services
 
         #endregion
 
-        #region methods
+        #region Methods
 
         public List<TaskItem> GetTasksForToday()
         {
@@ -31,6 +34,22 @@ namespace TodoList.Core.Services
             !x.IsCompleted 
             && x.isToday()
             ).ToList();
+        }
+
+        public void AddSubItem(TaskItem item, TaskISubtem child)
+        {
+            child.IdParent = item.Id;
+            child.Parent = item;
+            item.Items.Add(child);
+            _myRepo.AddSubItem(item,child);
+            _myRepo.Save();
+        }
+
+        public void RemoveSubItem(TaskItem item, TaskISubtem child)
+        {
+            item.Items.Remove(child);
+            _myRepo.RemoveSubItem(item, child);
+            _myRepo.Save();
         }
 
         #endregion

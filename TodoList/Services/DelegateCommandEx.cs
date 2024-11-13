@@ -6,8 +6,10 @@ namespace TodoList.Services
 
     public class DelegateCommandEx : DelegateCommand
     {
-        #region Private properties
 
+        #region Fields
+        private Action _executeMethod;
+        private Action<object> _executeMethodParams;
         #endregion
 
         #region Public properties
@@ -18,26 +20,44 @@ namespace TodoList.Services
 
         #region Constructors
 
-        public DelegateCommandEx(Action executeMethod) : base(executeMethod)
+        public DelegateCommandEx(Action executeMethod) : base(() => { })
         {
-
+            _executeMethod = executeMethod;
         }
 
-        public DelegateCommandEx(Action executeMethod, Func<bool> canExecuteMethod) : base(executeMethod, canExecuteMethod)
+        public DelegateCommandEx(Action<object> executeMethod) : base(() => { })
         {
+            _executeMethodParams = executeMethod;
+        }
+
+        public DelegateCommandEx(Action<object> executeMethod, Func<bool> canExecuteMethod) : base(() => { }, canExecuteMethod)
+        {
+            _executeMethodParams = executeMethod;
+        }
+
+        public DelegateCommandEx(Action executeMethod, Func<bool> canExecuteMethod) : base(() => { }, canExecuteMethod)
+        {
+            _executeMethod = executeMethod;
         }
 
         #endregion
 
         #region Methods
 
+        public void Invoke(object parameter)
+        {
+            Execute(parameter);
+        }
 
         protected override void Execute(object parameter)
         {
             try
             {
-                base.Execute(parameter);
-            }catch(Exception ex)
+                _executeMethod?.Invoke();
+                _executeMethodParams?.Invoke(parameter);
+                //base.Execute(parameter);
+            }
+            catch(Exception ex)
             {
                 ExeptionArgs?.Invoke(ex);
             }

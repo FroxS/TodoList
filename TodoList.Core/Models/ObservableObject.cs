@@ -26,6 +26,11 @@ namespace TodoList.Core.Models
             PropertyChanging?.Invoke(this, new PropertyChangingEventArgs(name));
         }
 
+        public void RaisePropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
 
     }
     

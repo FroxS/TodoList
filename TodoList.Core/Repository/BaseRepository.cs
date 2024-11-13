@@ -39,7 +39,7 @@ namespace TodoList.Core.Repository
             return await items.ToListAsync(cancellationToken);
         }
 
-        public virtual List<T> GetAll(bool sortbylp = true)
+        public virtual List<T> GetAll()
         {
             IQueryable<T> items = DbContext.Set<T>();
             return items.ToList();

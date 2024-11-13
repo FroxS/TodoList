@@ -57,6 +57,7 @@ public partial class ShellWindow : MetroWindow, IRibbonWindow
 
         App.CloseSplashScreen(); 
         var window = sender as MetroWindow;
+        window.Activate();
         TitleBar = window.FindChild<RibbonTitleBar>("RibbonTitleBar");
         TitleBar.InvalidateArrange();
         TitleBar.UpdateLayout();

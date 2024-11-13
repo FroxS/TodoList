@@ -1,4 +1,6 @@
-﻿namespace TodoList.Core.Models
+﻿using System.Collections.ObjectModel;
+
+namespace TodoList.Core.Models
 {
     public class TaskItem : BaseItem
     {
@@ -12,6 +14,7 @@
         private bool _important;
         private string _group;
         private bool _addNotification;
+        private ObservableCollection<TaskISubtem> _items;
 
         #endregion
 
@@ -63,6 +66,12 @@
         {
             get => _addNotification;
             set { _addNotification = value; OnPropertyChanged(); }
+        }
+
+        public virtual ObservableCollection<TaskISubtem> Items
+        {
+            get => _items;
+            set { _items = value; OnPropertyChanged(); }
         }
 
         #endregion

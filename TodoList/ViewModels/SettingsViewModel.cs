@@ -1,4 +1,5 @@
 ﻿using System.Globalization;
+using System.Windows;
 using System.Windows.Input;
 
 using Prism.Commands;
@@ -110,10 +111,19 @@ public class SettingsViewModel : BindableBase, INavigationAware
             Thread.CurrentThread.CurrentCulture = cultureInfo;
             Thread.CurrentThread.CurrentUICulture = cultureInfo;
 
-            // Ustawienie kultury dla całej aplikacji
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
             App.ReloadResources();
+
+            var result = MessageBox.Show(Properties.Resources.AskRestartApp, Properties.Resources.Restart, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if(result == MessageBoxResult.Yes)
+            {
+                App.Current.Properties["Lang"] = SelectedLang.Key;
+                string exe = _applicationInfoService.GetExePath();
+                System.Diagnostics.Process.Start(exe);
+                Application.Current.Shutdown();
+            }
+
         }
         App.Current.Properties["Lang"] = SelectedLang.Key;
     }

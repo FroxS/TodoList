@@ -53,6 +53,11 @@ public class MainViewModel : BindableBase, INavigationAware
     public DelegateCommandEx SetAsDoneCommand { get;}
     public DelegateCommandEx SaveCommand { get; }
     public DelegateCommandEx SearchCommand { get; }
+
+    public DelegateCommandEx AddSubItemCommand { get; }
+
+    public DelegateCommandEx RemoveSubItemCommand { get; }
+
     #endregion
 
     #region Constructors
@@ -62,7 +67,9 @@ public class MainViewModel : BindableBase, INavigationAware
         _taskItemService = taskItemService;
         AddCommand = new DelegateCommandEx(() => Add(null));
         RemoveCommand = new DelegateCommandEx(Remove, () => Selected != null);
-        SetAsDoneCommand = new DelegateCommandEx(SetAsDone, () => Selected != null);
+        SetAsDoneCommand = new DelegateCommandEx((o) => SetAsDone(o as TaskItem), () => Selected != null);
+        AddSubItemCommand = new DelegateCommandEx(AddSubItem, () => Selected != null);
+        RemoveSubItemCommand = new DelegateCommandEx((o) => RemoveSubItem(o), () => Selected != null);
         SaveCommand = new DelegateCommandEx(Save);
         TasksCollection = CollectionViewSource.GetDefaultView(Tasks);
         TasksCollection.GroupDescriptions.Add(new TaskGroupComplited());
@@ -127,6 +134,25 @@ public class MainViewModel : BindableBase, INavigationAware
         return true;
     }
 
+    private void AddSubItem()
+    {
+        if (Selected == null)
+            return;
+
+        var child = new TaskISubtem();
+        _taskItemService.AddSubItem(Selected, child);
+        Selected.RaisePropertyChanged(nameof(Selected.Items));
+    }
+
+    private void RemoveSubItem(object obj)
+    {
+        if (Selected == null || !(obj is TaskISubtem subitem) || !(Selected?.Items.Contains(subitem) ?? false))
+            return;
+
+        _taskItemService.RemoveSubItem(Selected, subitem);
+        Selected.RaisePropertyChanged(nameof(Selected.Items));
+    }
+
     private void Add(TaskItem item = null)
     {
         if(item == null)
@@ -173,7 +199,6 @@ public class MainViewModel : BindableBase, INavigationAware
         if (Selected == null)
             return;
 
-
         var result = System.Windows.MessageBox.Show(Properties.Resources.AskToDel, Properties.Resources.Removal, System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Question);
 
         if (result != System.Windows.MessageBoxResult.Yes)
@@ -204,10 +229,13 @@ public class MainViewModel : BindableBase, INavigationAware
         }
     }
 
-    private void SetAsDone()
+    private void SetAsDone(TaskItem item = null)
     {
-        Selected.IsCompleted = true;
-        _taskItemService.Update(Selected);
+        if (item == null)
+            item = Selected;
+
+        item.IsCompleted = true;
+        _taskItemService.Update(item);
         RaisePropertyChanged(nameof(Selected));
     }
     private void Save()
