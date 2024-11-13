@@ -5,9 +5,6 @@ on:
     tags:
       - 'version-*' 
 
-#permissions:
-#  contents: write
-
 jobs:
   
   build:
@@ -45,6 +42,12 @@ jobs:
     - name: Publish the application
       run: dotnet publish ${{ env.Project_path }} -c Release --self-contained -r win-x64 -p:PublishSingleFile=true
 
+    - name: Create ZIP of .exe files
+      run: |
+        $exeFiles = Get-ChildItem -Path "TodoList/bin/Release/net6.0-windows10.0.19041.0/win-x64/publish" -Filter *.exe
+        $zipFile = "TodoList.zip"
+        Compress-Archive -Path $exeFiles.FullName -DestinationPath $zipFile
+    
     - uses: actions/create-release@v1
       id: create_release
       env:
@@ -58,4 +61,5 @@ jobs:
     - uses: csexton/release-asset-action@v2
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
+        pattern: TodoList.zip
         release-url: ${{ steps.create_release.outputs.upload_url }}
