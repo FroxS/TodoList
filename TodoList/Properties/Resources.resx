@@ -219,4 +219,10 @@
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
+  <data name="AskToDel" xml:space="preserve">
+    <value>Are you sure you want to delete?</value>
+  </data>
+  <data name="Removal" xml:space="preserve">
+    <value>Removal</value>
+  </data>
 </root>

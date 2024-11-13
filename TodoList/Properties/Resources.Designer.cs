@@ -79,6 +79,15 @@ namespace TodoList.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete?.
+        /// </summary>
+        public static string AskToDel {
+            get {
+                return ResourceManager.GetString("AskToDel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Completed.
         /// </summary>
         public static string Completed {
@@ -192,6 +201,15 @@ namespace TodoList.Properties {
         public static string Notifications {
             get {
                 return ResourceManager.GetString("Notifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Removal.
+        /// </summary>
+        public static string Removal {
+            get {
+                return ResourceManager.GetString("Removal", resourceCulture);
             }
         }
         

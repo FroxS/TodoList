@@ -169,7 +169,7 @@
     <value>TodoList</value>
   </data>
   <data name="TodoListPageTitle" xml:space="preserve">
-    <value>TodoList</value>
+    <value>Lista zadań</value>
   </data>
   <data name="Add" xml:space="preserve">
     <value>Dodaj</value>
@@ -218,5 +218,11 @@
   </data>
   <data name="Save" xml:space="preserve">
     <value>Zapisz</value>
+  </data>
+  <data name="AskToDel" xml:space="preserve">
+    <value>Czy na pewno chcesz usunać?</value>
+  </data>
+  <data name="Removal" xml:space="preserve">
+    <value>Usuwanie</value>
   </data>
 </root>

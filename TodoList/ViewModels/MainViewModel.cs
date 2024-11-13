@@ -173,6 +173,12 @@ public class MainViewModel : BindableBase, INavigationAware
         if (Selected == null)
             return;
 
+
+        var result = System.Windows.MessageBox.Show(Properties.Resources.AskToDel, Properties.Resources.Removal, System.Windows.MessageBoxButton.YesNo, System.Windows.MessageBoxImage.Question);
+
+        if (result != System.Windows.MessageBoxResult.Yes)
+            return;
+
         int indeks = Tasks.IndexOf(Selected);
 
         Selected.PropertyChanged -= Item_PropertyChanged;

@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList", "TodoList.csproj", "{028FA378-7906-4248-94E9-F3471E7BE79F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList", "TodoList\TodoList.csproj", "{028FA378-7906-4248-94E9-F3471E7BE79F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.Core", "..\TodoList.Core\TodoList.Core.csproj", "{75B83D16-6E92-4525-A9C5-47FC23A2FACD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.Core", "TodoList.Core\TodoList.Core.csproj", "{75B83D16-6E92-4525-A9C5-47FC23A2FACD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.Core.Tests.NUnit", "..\TodoList.Core.Tests.NUnit\TodoList.Core.Tests.NUnit.csproj", "{2F37B61F-627A-4C5F-9450-3A5C8278AB55}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoList.Core.Tests.NUnit", "TodoList.Core.Tests.NUnit\TodoList.Core.Tests.NUnit.csproj", "{2F37B61F-627A-4C5F-9450-3A5C8278AB55}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
