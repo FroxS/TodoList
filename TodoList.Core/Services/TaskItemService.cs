@@ -40,6 +40,8 @@ namespace TodoList.Core.Services
         {
             child.IdParent = item.Id;
             child.Parent = item;
+            if (item.Items == null)
+                item.Items = new System.Collections.ObjectModel.ObservableCollection<TaskISubtem>();
             item.Items.Add(child);
             _myRepo.AddSubItem(item,child);
             _myRepo.Save();
