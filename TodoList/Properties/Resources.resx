@@ -234,4 +234,10 @@
   <data name="Tasks" xml:space="preserve">
     <value>Tasks</value>
   </data>
+  <data name="ClearFilter" xml:space="preserve">
+    <value>Clear filter</value>
+  </data>
+  <data name="Complete" xml:space="preserve">
+    <value>Complete</value>
+  </data>
 </root>

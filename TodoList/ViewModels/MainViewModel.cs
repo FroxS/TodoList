@@ -18,7 +18,9 @@ public class MainViewModel : BindableBase, INavigationAware
     private readonly ITaskItemService _taskItemService;
     private TaskItem _selected;
     private string _searchText;
-
+    private string _filterByDate;
+    private DateTime? _searchDate;
+    private bool _showTodayList = true;
     #endregion
 
     #region Properties
@@ -39,11 +41,41 @@ public class MainViewModel : BindableBase, INavigationAware
         }
     }
 
+    public DateTime? SearchDate
+    {
+        get { return _searchDate; }
+        set
+        {
+            SetProperty(ref _searchDate, value);
+            Search();
+        }
+    }
+
+    public bool ShowTodayList
+    {
+        get { return _showTodayList; }
+        set
+        {
+            SetProperty(ref _showTodayList, value);
+        }
+    }
+
     public ObservableCollection<TaskItem> Tasks { get; private set; } = new ObservableCollection<TaskItem>();
 
     public ICollectionView TasksCollection { get; private set; }
 
     public ObservableCollection<TaskItem> TodayTasks { get; private set; } = new ObservableCollection<TaskItem>();
+
+    public string FilterByDate
+    {
+        get { return _filterByDate; }
+        set
+        {
+            SetProperty(ref _filterByDate, value);
+            Search();
+        }
+    }
+
     #endregion
 
     #region Commands
@@ -58,6 +90,10 @@ public class MainViewModel : BindableBase, INavigationAware
 
     public DelegateCommandEx RemoveSubItemCommand { get; }
 
+    public DelegateCommandEx ClearSearchCommand { get; }
+
+
+
     #endregion
 
     #region Constructors
@@ -70,6 +106,7 @@ public class MainViewModel : BindableBase, INavigationAware
         SetAsDoneCommand = new DelegateCommandEx((o) => SetAsDone(o as TaskItem), () => Selected != null);
         AddSubItemCommand = new DelegateCommandEx(AddSubItem, () => Selected != null);
         RemoveSubItemCommand = new DelegateCommandEx((o) => RemoveSubItem(o), () => Selected != null);
+        ClearSearchCommand = new DelegateCommandEx(ClearSearch);
         SaveCommand = new DelegateCommandEx(Save);
         TasksCollection = CollectionViewSource.GetDefaultView(Tasks);
         TasksCollection.GroupDescriptions.Add(new TaskGroupComplited());
@@ -77,6 +114,8 @@ public class MainViewModel : BindableBase, INavigationAware
         TasksCollection.SortDescriptions.Add(new SortDescription(nameof(TaskItem.Important), ListSortDirection.Descending));
         SearchCommand = new DelegateCommandEx(Search);
     }
+
+    
 
     #endregion
 
@@ -105,29 +144,49 @@ public class MainViewModel : BindableBase, INavigationAware
 
     #region Commands methods
 
+    private void ClearSearch()
+    {
+        _searchText = null;
+        _searchDate = null;
+        Search();
+        RaisePropertyChanged(nameof(SearchText));
+        RaisePropertyChanged(nameof(SearchDate));
+    }
+
     private void Search()
     {
-        if (String.IsNullOrEmpty(SearchText))
+        if (String.IsNullOrEmpty(SearchText) && SearchDate == null)
+        {
             TasksCollection.Filter = null;
+            ShowTodayList = true;
+        }
         else
+        {
             TasksCollection.Filter = FilterTasks;
+            ShowTodayList = false;
+        }
+            
     }
 
     private bool FilterTasks(object obj)
     {
         if (obj is TaskItem task)
         {
-            if (string.IsNullOrEmpty(SearchText) || string.IsNullOrWhiteSpace(SearchText))
-                return true;
+            if(SearchDate != null)
+            {
+                if (SearchDate.Value.Date == task.DueDate.Date)
+                    return true;
+            }
 
-            string search = SearchText.ToLower();
-            if (task.Title != null && task.Title.ToLower().Contains(search))
-                return true;
+            if (!(string.IsNullOrEmpty(SearchText) || string.IsNullOrWhiteSpace(SearchText)))
+            {
+                string search = SearchText.ToLower();
+                if (task.Title != null && task.Title.ToLower().Contains(search))
+                    return true;
 
-            if (task.Description != null && task.Description.ToLower().Contains(search))
-                return true;
-
-
+                if (task.Description != null && task.Description.ToLower().Contains(search))
+                    return true;
+            }
             return false;
         }
 

@@ -60,7 +60,7 @@
                                        Margin="5 0 5 0"
                                        IsChecked="{Binding IsCompleted,UpdateSourceTrigger=PropertyChanged}"
                                        Foreground="{DynamicResource Theme.ShowcaseBrush}"
-                                       ToolTip="{x:Static properties:Resources.Notifications}">
+                                       ToolTip="{x:Static properties:Resources.Complete}">
                             
                         </ctrl:MyToogle>
                         <TextBlock
@@ -275,36 +275,74 @@
         </Grid.ColumnDefinitions>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="48" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <StackPanel Orientation="Horizontal"
-                        Margin="5">
-                <Path Data="{StaticResource checklist}"
-                      Stretch="Uniform"
-                      Fill="{StaticResource MahApps.Brushes.Accent}"/>
-                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="{StaticResource MediumLeftMargin}"
-                         Width="150"
-                         Height="30"/>
+            <Grid Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
 
-                <Button Height="30"
-                        Command="{Binding SearchCommand}"
-                        >
-                    <Path Data="{StaticResource search}"
+                <Path Data="{StaticResource search}"
+                      Stretch="Uniform"
+                      Width="20"
+                      Margin="0 0 5 0"
+                      Fill="{StaticResource MahApps.Brushes.ThemeForeground}">
+                    
+                </Path>
+                
+                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         Height="30"
+                         Grid.Column="1"/>
+
+                <Button 
+                    x:Name="CalendarButton"
+                    Height="30"
+                    Grid.Column="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Click="CalendarButton_Click"
+                    Padding="2"
+                    ToolTip="{Binding SearchDate, StringFormat=dd.MM.yyyy}">
+                    <Path Data="{StaticResource Calendar}"
+                          Width="20"
                           Stretch="Uniform"
-                          Fill="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"/>
+                          Fill="{StaticResource Fluent.Ribbon.Brushes.AccentBaseColorBrush}">
+                        
+                    </Path>
                 </Button>
 
-            </StackPanel>
+                <!-- Popup z kalendarzem -->
+                <Popup x:Name="CalendarPopup"
+                       PlacementTarget="{Binding ElementName=CalendarButton}"
+                       Placement="Bottom"
+                       StaysOpen="False"
+                       >
+                    <Border BorderThickness="1">
+                        <Calendar x:Name="CalendarControl"  SelectedDatesChanged="CalendarControl_SelectedDatesChanged"/>
+                    </Border>
+                </Popup>
+
+                <Button Height="30"
+                        Command="{Binding ClearSearchCommand}"
+                        Grid.Column="3"
+                        ToolTip="{x:Static properties:Resources.ClearFilter}">
+                    <Path Data="{StaticResource Clear}"
+                          Stretch="Uniform"
+                          Fill="{StaticResource Fluent.Ribbon.Brushes.AccentBaseColorBrush}"/>
+                </Button>
+
+            </Grid>
             <ScrollViewer Grid.Row="1">
-
-
                 <StackPanel>
                     <Expander 
                         Header="{x:Static properties:Resources.Today}" 
                         IsExpanded="True"
-                        Visibility="{Binding SearchText, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}, ConverterParameter=True}">
+                        Visibility="{Binding ShowTodayList, UpdateSourceTrigger=PropertyChanged, Converter={conv:BoolToVisibleConventer}}">
                     <ListView
                         AutomationProperties.Name="{x:Static properties:Resources.ListDetailsListDescription}"
                         ItemsSource="{Binding TodayTasks}"

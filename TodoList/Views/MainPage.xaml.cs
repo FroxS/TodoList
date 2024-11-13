@@ -25,5 +25,21 @@ public partial class MainPage : UserControl
             vm.RemoveSubItemCommand.Invoke(fe?.DataContext);
         }
     }
-    
+
+    private void CalendarControl_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (CalendarControl.SelectedDate.HasValue)
+        {
+            if (DataContext is MainViewModel vm)
+            {
+                vm.SearchDate = CalendarControl.SelectedDate;
+            }
+            CalendarPopup.IsOpen = false;
+        }
+    }
+
+    private void CalendarButton_Click(object sender, RoutedEventArgs e)
+    {
+        CalendarPopup.IsOpen = true;
+    }
 }
