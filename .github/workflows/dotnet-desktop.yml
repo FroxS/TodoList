@@ -5,6 +5,9 @@ on:
     tags:
       - 'version-*' 
 
+permissions:
+  contents: write
+
 jobs:
   build:
     strategy:
@@ -17,10 +20,8 @@ jobs:
       Project_path: TodoList/TodoList.csproj                       
       Test_Project_Path: TodoList.Core.Tests.NUnit/TodoList.Core.Tests.NUnit.csproj                
 
-
-
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
 
     - uses: actions/setup-dotnet@v1
       with:
