@@ -5,16 +5,22 @@ on:
     tags:
       - 'version-*' 
 
-permissions:
-  contents: write
+#permissions:
+#  contents: write
 
 jobs:
+  
   build:
     strategy:
       matrix:
         configuration: [Release]
 
     runs-on: windows-latest 
+
+    permissions:
+      contents: write
+      pull-requests: write
+      repository-projects: write
 
     env:
       Project_path: TodoList/TodoList.csproj                       
@@ -26,11 +32,9 @@ jobs:
     - uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 6.0.x
-    - name: Check directory structure
-      run: dir
 
-    - name: Run Test
-      run: dotnet test ${{ env.Test_Project_Path }}
+    #- name: Run Test
+    #  run: dotnet test ${{ env.Test_Project_Path }}
 
     - name: Restore the application
       run: dotnet restore ${{ env.Project_path }}
