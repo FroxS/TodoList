@@ -43,8 +43,8 @@ jobs:
         tag_name: ${{ github.ref }}
         release_name: ${{ github.ref }}
 
-    -uses: csexton/release/asset-action@v2
-    with:
-      github-token: ${{ secrets.GITHUB_TOKEN }}
-      pattern: TodoList/bin/Release/net6.0-windows10.0.19041.0/win-x64/publish/*.exe
-      release-url: ${{ steps.create_release.output.upload_url }}
+    - uses: csexton/release-asset-action@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        pattern: TodoList/bin/Release/net6.0-windows10.0.19041.0/win-x64/publish/*.exe
+        release-url: ${{ steps.create_release.output.upload_url }}
