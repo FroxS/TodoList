@@ -8,7 +8,7 @@ Aplikacja desktopowa umożiwiająca tworzenie, zarządzanie zadań typu TODO. Ap
 1). Wymagania: 
  - .NET Core 6.0 SDK (https://dotnet.microsoft.com/download/dotnet/6.0)
 
-2). Najnowsza wersja do pobrania 1.0.0.5 **[TodoList.zip](https://github.com/FroxS/TodoList/releases/download/version-1.0.0.5/TodoList.zip)**
+2). Najnowsza wersja do pobrania 1.0.0.6 **[TodoList.zip](https://github.com/FroxS/TodoList/releases/download/version-1.0.0.6/TodoList.zip)**
 
 ## Funkcje
 
