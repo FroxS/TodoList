@@ -34,5 +34,11 @@
 			<_Parameter1>TodoList.Core.Tests.NUnit</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
+
+	<ItemGroup>
+		<AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+			<_Parameter1>TodoList.RESTAPI</_Parameter1>
+		</AssemblyAttribute>
+	</ItemGroup>
 	
 </Project>

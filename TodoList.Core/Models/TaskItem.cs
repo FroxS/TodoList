@@ -89,7 +89,7 @@ namespace TodoList.Core.Models
 
         public bool isToday()
         {
-            if (DueDate == DateTime.Today)
+            if (DueDate.Date == DateTime.Today)
                 return true;
 
 

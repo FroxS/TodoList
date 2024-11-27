@@ -50,6 +50,31 @@ namespace TodoList.Core.Repository
         }
 
 
+        public TaskItem GetByIdWithItems(Guid id)
+        {
+            var trackedItem = DbContext.ChangeTracker.Entries<TaskItem>().FirstOrDefault(e => e.Entity is TaskItem && e.Entity != null && ((TaskItem)e.Entity).Id == id);
+            TaskItem? item;
+            if (trackedItem != null)
+            {
+                item = trackedItem.Entity;
+            }
+            else
+            {
+                if (!(Exist(id)))
+                    return null;
+                item = DbContext.Tasks.Include(x => x.Items).FirstOrDefault(x => x.Id == id);
+            }
+            return item;
+        }
+
+
+        public TaskISubtem GetSubItem(Guid id)
+        {
+            return DbContext.SubTasks.Find(id);
+        }
+
+
+
         #endregion
     }
 }

@@ -16,10 +16,7 @@
                 <ResourceDictionary Source="/Styles/UserControl.xaml" />
                 <ResourceDictionary Source="/Styles/Button.xaml" />
                 <ResourceDictionary Source="/Styles/Shapes.xaml" />
-                <!--
-                MahApps.Metro resource dictionaries.
-                Learn more about using MahApps.Metro at https://mahapps.com/
-                -->
+                
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <!-- Accent and AppTheme setting -->

@@ -50,6 +50,8 @@ namespace TodoList.Core.Services
         public virtual void Update(M model)
         {
             _repozitory.Update(model);
+            if (AutoSave)
+                _repozitory.Save();
         }
 
         public virtual async Task<bool> DeleteAsync(Guid id, CancellationToken cancellationToken = default)

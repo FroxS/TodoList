@@ -30,7 +30,7 @@
             set { _isCompleted = value; OnPropertyChanged(); }
         }
 
-        public virtual TaskItem Parent
+        public virtual TaskItem? Parent
         {
             get => _parent;
             set { _parent = value; OnPropertyChanged(); }

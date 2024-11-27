@@ -63,8 +63,9 @@ namespace TodoList.Core.EF
             {
                 base.OnConfiguring(options);
                 return;
-            }    
-            options.UseSqlite($"Data Source={DatabasePath}");
+            }
+            if(!options.IsConfigured)
+                options.UseSqlite($"Data Source={DatabasePath}");
         }
 
         #endregion

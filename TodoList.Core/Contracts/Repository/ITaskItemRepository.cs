@@ -6,5 +6,7 @@ namespace TodoList.Core.Contracts
     {
         void AddSubItem(TaskItem item, TaskISubtem child);
         void RemoveSubItem(TaskItem item, TaskISubtem child);
+        TaskISubtem GetSubItem(Guid id);
+        TaskItem GetByIdWithItems(Guid id);
     }
 }
